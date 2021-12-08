@@ -397,4 +397,5 @@ int main()
     g = (rand() % N) + 1;
     if (g == 22) g = 4;
     Draw(0);
+    system("pause");
 }
