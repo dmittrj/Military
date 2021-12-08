@@ -1,8 +1,11 @@
 ﻿#include <iostream>
 using namespace std;
 
+const int N = 24;
+
 string statesList[] = { "Адыгея", "Башкортостан", "Бурятия", "Алтай", "Дагестан", "Ингушетия", "Кабардино-Балкария", "Калмыкия", "Карачаево-Черкесия", "Карелия", 
-"Коми", "Марий-Эл", "Мордовия", "Якутия", "Сев.Осетия", "Татарстан", "Тыва", "Удмуртия"};
+"Коми", "Марий-Эл", "Мордовия", "Якутия", "Сев.Осетия", "Татарстан", "Тыва", "Удмуртия", "Хакассия", "Чечня",
+"Чувашия", "Алтай", "Краснодар", "Красноярск"};
 
 struct coord {
     int x;
@@ -12,7 +15,8 @@ struct coord {
 coord coordsList[] = { {7, 20}, {23, 19}, {58, 20}, {43, 23}, {11, 23}, 
     {10, 21}, {8, 21}, {12, 20}, {8, 20}, {18, 11}, 
     {27, 14}, {20, 16}, {16, 17}, {60, 12}, {9, 21},
-    {20, 17}, {47, 22}, {23, 17} };
+    {20, 17}, {47, 22}, {23, 17}, {45, 22}, {10, 22},
+    {18, 17}, {43, 23}, {7, 20}, {46, 14} };
 int g;
 
 void E() {
@@ -54,8 +58,8 @@ string toName(int a) {
 }
 
 string Compare(int reg) {
-    int wgt = coordsList[g - 1].x - coordsList[reg - 1].x;
-    int hgt = coordsList[g - 1].y - coordsList[reg - 1].y;
+    float wgt = coordsList[g - 1].x - coordsList[reg - 1].x;
+    float hgt = coordsList[g - 1].y - coordsList[reg - 1].y;
     float tg = hgt / wgt;
     if (wgt >= 0 && hgt < 0) {
         if (tg < -0.42 && tg > -2.46) return "северо-восточнее";
@@ -88,7 +92,7 @@ int State(string s) {
     if (s1[0] >= 49 && s1[0] <= 57) {
         return tonum("0" + s);
     }
-    for (int i = 0; i < 14; i++)
+    for (int i = 0; i < N; i++)
         if (s == statesList[i]) return i + 1;
     return -1;
 }
@@ -104,14 +108,14 @@ void Draw(int region) {
     Island(68, 10); E();
 
     //6
-    Dot(44); 
+    if (region == 24) DotO(44); else Dot(44);
     if (region == 14) DotO(14); else Dot(14);
     if (region == 14) DotO(5); else Dot(5);
     Island(1, 11); E();
 
     //7
-    Dot(44); 
-    Dot(1); 
+    if (region == 24) DotO(44); else Dot(44);
+    if (region == 24) DotO(1); else Dot(1);
     if (region == 14) IslandO(9, 2); else Island(9, 2);
     if (region == 14) DotO(1); else Dot(1);
     if (region == 14) IslandO(2, 7); else Island(2, 7);
@@ -120,13 +124,16 @@ void Draw(int region) {
     E();
 
     //8
-    Island(21, 2); Island(11, 4); Island(8, 4); 
+    Island(21, 2); 
+    Island(11, 4); 
+    if (region == 24) IslandO(8, 4); else Island(8, 4);
     if (region == 14) IslandO(10, 11); else Island(10, 11);
     Island(0, 4);
     Dot(1); E();
 
     //9
-    Island(19, 4); Island(8, 2); Island(11, 6); 
+    Island(19, 4); Island(8, 2); 
+    if (region == 24) IslandO(11, 6); else Island(11, 6);
     if (region == 14) IslandO(4, 2); else Island(4, 2);
     if (region == 14) IslandO(3, 11); else Island(3, 11);
     Island(0, 4);
@@ -135,8 +142,9 @@ void Draw(int region) {
     //10
     if (region == 10) IslandO(17, 3); else Island(17, 3);
     Island(1, 3); 
-    Dot(6); Island(11, 7); 
-    Island(1, 1); 
+    Dot(6); 
+    if (region == 24) IslandO(11, 7); else Island(11, 7);
+    if (region == 24) DotO(1); Dot(1);
     if (region == 14) IslandO(0, 19); else Island(0, 19);
     Island(0, 4);
     Island(3, 4); E();
@@ -146,8 +154,9 @@ void Draw(int region) {
     Island(7, 1); 
     if (region == 10) IslandO(0, 5); else Island(0, 5);
     Island(0, 1);
-    Island(1, 3); Dot(6); Island(3, 2); Dot(2); 
-    Island(1, 11); 
+    Island(1, 3); Dot(6); Island(3, 2); 
+    if (region == 24) DotO(2); else Dot(2);
+    if (region == 24) IslandO(1, 11); else Island(1, 11);
     if (region == 14) IslandO(0, 17); else Island(0, 17);
     Island(0, 6);
     Island(3, 4); E();
@@ -157,7 +166,8 @@ void Draw(int region) {
     if (region == 10) IslandO(0, 3); else  Island(0, 3);
     Island(0, 15);
     Dot(1); 
-    Island(1, 14); 
+    Island(1, 3);
+    if (region == 24) IslandO(0, 11); else Island(0, 11);
     if (region == 14) IslandO(0, 19); else Island(0, 19);
     Island(0, 2);
     Island(8, 3); E();
@@ -166,7 +176,8 @@ void Draw(int region) {
     Island(11, 12); 
     if (region == 11) IslandO(0, 11); else Island(0, 11);
     Island(0, 2);
-    Island(1, 14); 
+    Island(1, 3);
+    if (region == 24) IslandO(0, 11); else Island(0, 11);
     if (region == 14) IslandO(0, 17); else Island(0, 17);
     Island(0, 3);
     E();
@@ -174,7 +185,8 @@ void Draw(int region) {
     //14
     Island(10, 14);
     if (region == 11) IslandO(0, 6); else Island(0, 6);
-    Island(0, 21);
+    Island(0, 10);
+    if (region == 24) IslandO(0, 11); else Island(0, 11);
     if (region == 14) IslandO(0, 18); else Island(0, 18);
     Island(0, 1);
     E();
@@ -182,7 +194,8 @@ void Draw(int region) {
     //15
     Island(9, 13); 
     if (region == 11) IslandO(0, 6); else Island(0, 6);
-    Island(0, 23);
+    Island(0, 12);
+    if (region == 24) IslandO(0, 11); else Island(0, 11);
     if (region == 14) IslandO(0, 16); else Island(0, 16);
     Island(0, 3);
     E();
@@ -190,7 +203,9 @@ void Draw(int region) {
     //16
     Island(9, 9); 
     if (region == 12) IslandO(0, 3); else  Island(0, 3);
-    Island(0, 33);
+    Island(0, 20);
+    if (region == 24) IslandO(0, 10); else Island(0, 10);
+    Island(0, 3);
     if (region == 14) IslandO(0, 14); else Island(0, 14);
     Island(0, 2);
     E();
@@ -198,11 +213,13 @@ void Draw(int region) {
     //17
     Island(10, 5); 
     if (region == 13) IslandO(0, 2); else Island(0, 2);
-    Dot(0);
+    if (region == 21) DotO(0); else Dot(0);
     if (region == 16) IslandO(0, 3); else Island(0, 3);
     Dot(0);
     if (region == 18) DotO(0); else Dot(0);
-    Island(0, 32);
+    Island(0, 17);
+    if (region == 24) IslandO(0, 11); else Island(0, 11);
+    Island(0, 4);
     if (region == 14) IslandO(0, 2); else Island(0, 2);
     Island(0, 3);
     if (region == 14) IslandO(0, 8); else Island(0, 8);
@@ -218,7 +235,9 @@ void Draw(int region) {
         Island(0, 10);
     }
     else Island(0, 5); 
-    Island(0, 29);
+    Island(0, 14);
+    if (region == 24) IslandO(0, 11); else Island(0, 11);
+    Island(0, 4);
     if (region == 14) DotO(0); else Dot(0);
     Island(0, 3);
     if (region == 3) {
@@ -234,8 +253,11 @@ void Draw(int region) {
     Island(1, 11);
     if (region == 2) {
         IslandO(0, 3);
-        Island(0, 26);
-    } else Island(1, 34); 
+        Island(0, 6);
+    } else Island(1, 14); 
+    Island(0, 7);
+    if (region == 24) IslandO(0, 7); else Island(0, 7);
+    Island(0, 6);
     if (region == 3) {
         IslandO(0, 4);
         Island(0, 18);
@@ -243,14 +265,16 @@ void Draw(int region) {
     else Island(0, 22); Dot(2); E();
 
     //20
-    if (region == 1) DotO(6); else Dot(6);
-    if (region == 9) DotO(0); else Dot(0);
+    if (region == 1 || region == 23) DotO(6); else Dot(6);
+    if (region == 9 || region == 23) DotO(0); else Dot(0);
     Island(0, 3); 
     if (region == 8) IslandO(0, 2); else Island(0, 2);
     Dot(0);
     Dot(1); Island(2, 4); 
     if (region == 2) DotO(0); else Dot(0);
-    Island(0, 33);
+    Island(0, 20);
+    if (region == 24) IslandO(0, 6); else Island(0, 6);
+    Island(0, 7);
     if (region == 3) {
         IslandO(0, 4);
         Island(0, 4);
@@ -266,7 +290,9 @@ void Draw(int region) {
     if (region == 8) DotO(0); else Dot(0);
     Island(0, 2);
     Dot(9); 
-    Island(11, 21); 
+    Island(11, 8);
+    if (region == 24) IslandO(0, 5); else Island(0, 5);
+    Island(0, 8);
     if (region == 3) {
         IslandO(0, 4);
         Island(0, 4);
@@ -275,7 +301,7 @@ void Draw(int region) {
     Island(11, 3); E();
 
     //22
-    Island(9, 1); 
+    if (region == 20) DotO(9); else Dot(9);
     if (region == 5) IslandO(0, 1); else Island(0, 1);
     Island(25, 5); 
     if (region == 4) {
@@ -283,7 +309,7 @@ void Draw(int region) {
         Island(0, 1);
     }
     else Island(0, 3);
-    Dot(0);
+    if (region == 19 || region == 24) DotO(0); else Dot(0);
     if (region == 17) IslandO(0, 4); else Island(0, 4);
     Island(1, 5); 
     if (region == 3) {
@@ -302,12 +328,48 @@ void Draw(int region) {
     if (region == 3) DotO(7); else Dot(7);
     E();
     Dot(51); E();
+    if (region == -1) {
+        cout << "Неизвестный регион\n\n\n";
+    } else
     if (region != 0) { 
         cout << "Ваш регион: " << toName(region); 
         if (region == g) {
             cout << "\nПОЗДРАВЛЯЕМ,\nвы угадали!\nВы будете служить ";
             cout << "в ";
-            cout << statesList[region - 1];
+            switch (region) {
+            case 11:
+                cout << statesList[region - 1];
+                break;
+            case 1:
+            case 4:
+            case 17:
+            case 20:
+                cout << statesList[region - 1].substr(0, statesList[region - 1].length() - 1) + "е";
+                break;
+            case 3:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 13:
+            case 14:
+            case 15:
+            case 18:
+            case 19:
+            case 21:
+                cout << statesList[region - 1].substr(0, statesList[region - 1].length() - 1) + "и";
+                break;
+            case 2:
+            case 5:
+            case 12:
+            case 16:
+            case 23:
+            case 24:
+                cout << statesList[region - 1] + "е";
+                break;
+            }
+            
             cout << ".\n\nВозьмите повестку и проследуйте в военкомат\n\n\n\n\n";
             return;
         }
@@ -319,6 +381,7 @@ void Draw(int region) {
     cout << "\nГде вы будете служить? > ";
     cin >> str;
     st = State(str);
+    if (st == 22) st = 4;
     Draw(st);
     return;
 }
@@ -328,6 +391,7 @@ int main()
     setlocale(LC_ALL, "Russian");
     system("chcp 1251");
     srand(time(0));
-    g = (rand() % 17) + 1;
+    g = (rand() % N) + 1;
+    if (g == 22) g = 4;
     Draw(0);
 }
