@@ -1,11 +1,11 @@
 ﻿#include <iostream>
 using namespace std;
 
-const int N = 27;
+const int N = 28;
 
 string statesList[] = { "Адыгея", "Башкортостан", "Бурятия", "Алтай", "Дагестан", "Ингушетия", "Кабардино-Балкария", "Калмыкия", "Карачаево-Черкесия", "Карелия", 
 "Коми", "Марий-Эл", "Мордовия", "Якутия", "Сев.Осетия", "Татарстан", "Тыва", "Удмуртия", "Хакассия", "Чечня",
-"Чувашия", "Алтай", "Краснодар", "Красноярск", "Приморье", "Ставрополь", "Хабаровск"};
+"Чувашия", "Алтай", "Краснодар", "Красноярск", "Приморье", "Ставрополь", "Хабаровск", "Приамурье"};
 
 bool attempts[N];
 
@@ -19,7 +19,7 @@ coord coordsList[] = { {7, 20}, {23, 19}, {58, 20}, {43, 23}, {11, 23},
     {27, 14}, {20, 16}, {16, 17}, {60, 12}, {9, 21},
     {20, 17}, {47, 22}, {23, 17}, {45, 22}, {10, 22},
     {18, 17}, {43, 23}, {7, 20}, {46, 14}, {77, 21},
-    {10, 20}, {72, 17} };
+    {10, 20}, {72, 17}, {68, 19} };
 int g;
 
 void E() {
@@ -129,7 +129,7 @@ void Draw(int region) {
     E();
 
     //4
-    Island(69, 4); Space(12); Bullet(4);
+    Island(69, 4); Space(12); Bullet(4); Space(14); Bullet(28);
     E();
 
     //5
@@ -288,10 +288,11 @@ void Draw(int region) {
     Island(0, 3);
     if (region == 3) {
         DotO(0);
-        Island(0, 10);
+        Island(0, 1);
     }
-    else Island(0, 11); 
-    Island(0, 2); 
+    else Island(0, 2); 
+    Island(0, 1); 
+    if (region == 28) IslandO(0, 10); else Island(0, 10);
     if (region == 27) IslandO(0, 4); else Island(0, 4);
     Dot(1); 
     Space(7); Bullet(18);
@@ -312,7 +313,8 @@ void Draw(int region) {
         Island(0, 1);
     }
     else Island(0, 5); 
-    Island(0, 11); 
+    Island(0, 3); 
+    if (region == 28) IslandO(0, 8); else Island(0, 8);
     if (region == 27) IslandO(0, 6); else Island(0, 6);
     Dot(2);
     Space(4); Bullet(19);
@@ -335,7 +337,7 @@ void Draw(int region) {
         Island(0, 4);
     }
     else Island(0, 8);
-    Island(3, 9); 
+    if (region == 28) IslandO(3, 9); else Island(3, 9);
     if (region == 27) IslandO(0, 1); else Island(0, 1);
     Space(8); Bullet(20);
     E();
@@ -404,6 +406,7 @@ void Draw(int region) {
             switch (region) {
             case 11:
             case 25:
+            case 28:
                 cout << statesList[region - 1];
                 break;
             case 1:
