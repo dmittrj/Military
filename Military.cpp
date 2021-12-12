@@ -1,22 +1,25 @@
 ﻿#include <iostream>
 using namespace std;
 
-const int N = 25;
+const int N = 26;
 
 string statesList[] = { "Адыгея", "Башкортостан", "Бурятия", "Алтай", "Дагестан", "Ингушетия", "Кабардино-Балкария", "Калмыкия", "Карачаево-Черкесия", "Карелия", 
 "Коми", "Марий-Эл", "Мордовия", "Якутия", "Сев.Осетия", "Татарстан", "Тыва", "Удмуртия", "Хакассия", "Чечня",
-"Чувашия", "Алтай", "Краснодар", "Красноярск", "Приморье"};
+"Чувашия", "Алтай", "Краснодар", "Красноярск", "Приморье", "Ставрополь"};
+
+bool attempts[N];
 
 struct coord {
     int x;
     int y;
 };
 
-coord coordsList[] = { {7, 20}, {23, 19}, {58, 20}, {43, 23}, {11, 23}, 
-    {10, 21}, {8, 21}, {12, 20}, {8, 20}, {18, 11}, 
+coord coordsList[] = { {7, 20}, {23, 19}, {58, 20}, {43, 23}, {11, 23},
+    {10, 21}, {8, 21}, {12, 20}, {8, 20}, {18, 11},
     {27, 14}, {20, 16}, {16, 17}, {60, 12}, {9, 21},
     {20, 17}, {47, 22}, {23, 17}, {45, 22}, {10, 22},
-    {18, 17}, {43, 23}, {7, 20}, {46, 14}, {77, 21} };
+    {18, 17}, {43, 23}, {7, 20}, {46, 14}, {77, 21},
+    {10, 20} };
 int g;
 
 void E() {
@@ -26,6 +29,17 @@ void E() {
 void Island(int x, int y) {
     for (int i = 0; i++ < x;) cout << " ";
     for (int i = 0; i++ < y;) cout << "#";
+}
+
+void Space(int x) {
+    for (int i = 0; i++ < x;) cout << " ";
+}
+
+void Bullet(int x) {
+    if (attempts[x - 1]) cout << "   "; else
+        if (x < 10) cout << " " << x << ".";
+        else cout << x << ".";
+    cout << " " << statesList[x - 1];
 }
 
 void IslandO(int x, int y) {
@@ -101,17 +115,33 @@ void Draw(int region) {
     string str;
     int st;
     system("cls");
-    Dot(76); E();
-    Dot(69); Island(4, 4); E();
-    Island(70, 4); E();
-    Island(69, 4); E();
-    Island(68, 10); E();
+
+    //1
+    Dot(76); Space(8); Bullet(1); Space(13); Bullet(25);
+    E();
+
+    //2
+    Dot(69); Island(4, 4); Space(7); Bullet(2); Space(7); Bullet(26);
+    E();
+
+    //3
+    Island(70, 4); Space(11); Bullet(3);
+    E();
+
+    //4
+    Island(69, 4); Space(12); Bullet(4);
+    E();
+
+    //5
+    Island(68, 10); Space(7); Bullet(5);
+    E();
 
     //6
     if (region == 24) DotO(44); else Dot(44);
     if (region == 14) DotO(14); else Dot(14);
     if (region == 14) DotO(5); else Dot(5);
-    Island(1, 11); E();
+    Island(1, 11); Space(7); Bullet(6);
+    E();
 
     //7
     if (region == 24) DotO(44); else Dot(44);
@@ -120,7 +150,7 @@ void Draw(int region) {
     if (region == 14) DotO(1); else Dot(1);
     if (region == 14) IslandO(2, 7); else Island(2, 7);
     Island(0, 9);
-    
+    Space(7); Bullet(7); Space(1); Bullet(25);
     E();
 
     //8
@@ -129,7 +159,9 @@ void Draw(int region) {
     if (region == 24) IslandO(8, 4); else Island(8, 4);
     if (region == 14) IslandO(10, 11); else Island(10, 11);
     Island(0, 4);
-    Dot(1); E();
+    Dot(1); 
+    Space(8); Bullet(8);
+    E();
 
     //9
     Island(19, 4); Island(8, 2); 
@@ -137,7 +169,9 @@ void Draw(int region) {
     if (region == 14) IslandO(4, 2); else Island(4, 2);
     if (region == 14) IslandO(3, 11); else Island(3, 11);
     Island(0, 4);
-    Dot(3); E();
+    Dot(3); 
+    Space(7); Bullet(9);
+    E();
     
     //10
     if (region == 10) IslandO(17, 3); else Island(17, 3);
@@ -147,7 +181,9 @@ void Draw(int region) {
     if (region == 24) DotO(1); Dot(1);
     if (region == 14) IslandO(0, 19); else Island(0, 19);
     Island(0, 4);
-    Island(3, 4); E();
+    Island(3, 4); 
+    Space(4); Bullet(10);
+    E();
 
     //11
     Dot(6); 
@@ -159,7 +195,9 @@ void Draw(int region) {
     if (region == 24) IslandO(1, 11); else Island(1, 11);
     if (region == 14) IslandO(0, 17); else Island(0, 17);
     Island(0, 6);
-    Island(3, 4); E();
+    Island(3, 4); 
+    Space(3); Bullet(11);
+    E();
 
     //12
     Island(10, 6); 
@@ -170,7 +208,9 @@ void Draw(int region) {
     if (region == 24) IslandO(0, 11); else Island(0, 11);
     if (region == 14) IslandO(0, 19); else Island(0, 19);
     Island(0, 2);
-    Island(8, 3); E();
+    Island(8, 3); 
+    Space(2); Bullet(12);
+    E();
 
     //13
     Island(11, 12); 
@@ -180,6 +220,7 @@ void Draw(int region) {
     if (region == 24) IslandO(0, 11); else Island(0, 11);
     if (region == 14) IslandO(0, 17); else Island(0, 17);
     Island(0, 3);
+    Space(14); Bullet(13);
     E();
 
     //14
@@ -189,6 +230,7 @@ void Draw(int region) {
     if (region == 24) IslandO(0, 11); else Island(0, 11);
     if (region == 14) IslandO(0, 18); else Island(0, 18);
     Island(0, 1);
+    Space(15); Bullet(14);
     E();
 
     //15
@@ -198,6 +240,7 @@ void Draw(int region) {
     if (region == 24) IslandO(0, 11); else Island(0, 11);
     if (region == 14) IslandO(0, 16); else Island(0, 16);
     Island(0, 3);
+    Space(15); Bullet(15);
     E();
 
     //16
@@ -208,6 +251,7 @@ void Draw(int region) {
     Island(0, 3);
     if (region == 14) IslandO(0, 14); else Island(0, 14);
     Island(0, 2);
+    Space(15); Bullet(16);
     E();
 
     //17
@@ -225,7 +269,9 @@ void Draw(int region) {
     if (region == 14) IslandO(0, 8); else Island(0, 8);
     Island(0, 8);
     
-    Dot(1); E();
+    Dot(1); 
+    Space(7); Bullet(17);
+    E();
 
     //18
     Island(10, 10); 
@@ -246,7 +292,9 @@ void Draw(int region) {
     }
     else Island(0, 11); 
     Island(0, 6); 
-    Dot(1); E();
+    Dot(1); 
+    Space(7); Bullet(18);
+    E();
 
     //19
     Dot(4); Dot(3); 
@@ -262,12 +310,15 @@ void Draw(int region) {
         IslandO(0, 4);
         Island(0, 18);
     }
-    else Island(0, 22); Dot(2); E();
+    else Island(0, 22); Dot(2); 
+    Space(4); Bullet(19);
+    E();
 
     //20
     if (region == 1 || region == 23) DotO(6); else Dot(6);
     if (region == 9 || region == 23) DotO(0); else Dot(0);
-    Island(0, 3); 
+    if (region == 26) IslandO(0, 2); else Island(0, 2);
+    Island(0, 1);
     if (region == 8) IslandO(0, 2); else Island(0, 2);
     Dot(0);
     Dot(1); Island(2, 4); 
@@ -280,12 +331,14 @@ void Draw(int region) {
         Island(0, 4);
     }
     else Island(0, 8);
-    Island(3, 10); E();
+    Island(3, 10); 
+    Space(8); Bullet(20);
+    E();
 
     //21
     if (region == 7) DotO(7); else Dot(7);
-    if (region == 15) DotO(0); else Dot(0);
-    if (region == 6) DotO(0); else Dot(0);
+    if (region == 15 || region == 26) DotO(0); else Dot(0);
+    if (region == 6 || region == 26) DotO(0); else Dot(0);
     Island(0, 1);
     if (region == 8) DotO(0); else Dot(0);
     Island(0, 2);
@@ -299,6 +352,7 @@ void Draw(int region) {
     }
     else Island(0, 8);
     if (region == 25) IslandO(11, 3); else Island(11, 3);
+    Space(7); Bullet(21);
     E();
 
     //22
@@ -319,6 +373,7 @@ void Draw(int region) {
     }
     else Island(0, 5);
     if (region == 25) IslandO(15, 2); else Island(15, 2);
+    Space(8); Bullet(22);
     E();
 
     //23
@@ -328,8 +383,11 @@ void Draw(int region) {
     if (region == 17) DotO(0); else Dot(0);
     if (region == 17) IslandO(1, 3); else  Island(1, 3);
     if (region == 3) DotO(7); else Dot(7);
+    Space(28); Bullet(23);
     E();
-    Dot(51); E();
+    Dot(51); 
+    Space(33); Bullet(24);
+    E();
     if (region == -1) {
         cout << "Неизвестный регион\n\n\n";
     } else
@@ -347,6 +405,7 @@ void Draw(int region) {
             case 4:
             case 17:
             case 20:
+            case 26:
                 cout << statesList[region - 1].substr(0, statesList[region - 1].length() - 1) + "е";
                 break;
             case 3:
@@ -385,6 +444,7 @@ void Draw(int region) {
     cin >> str;
     st = State(str);
     if (st == 22) st = 4;
+    attempts[st - 1] = true;
     Draw(st);
     return;
 }
@@ -396,6 +456,7 @@ int main()
     srand(time(0));
     g = (rand() % N) + 1;
     if (g == 22) g = 4;
+    for (int i = 0; i < N; i++) attempts[i] = false;
     Draw(0);
     system("pause");
 }
