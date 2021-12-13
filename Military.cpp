@@ -1,12 +1,12 @@
 ﻿#include <iostream>
 using namespace std;
 
-const int N = 32;
+const int N = 33;
 
 string statesList[] = { "Адыгея", "Башкортостан", "Бурятия", "Алтай", "Дагестан", "Ингушетия", "Кабардино-Балкария", "Калмыкия", "Карачаево-Черкесия", "Карелия", 
 "Коми", "Марий-Эл", "Мордовия", "Якутия", "Сев.Осетия", "Татарстан", "Тыва", "Удмуртия", "Хакассия", "Чечня",
 "Чувашия", "Алтай", "Краснодар", "Красноярск", "Приморье", "Ставрополь", "Хабаровск", "Приамурье", "Архангельск", "Астрахань",
-"Белгород", "Брянск"};
+"Белгород", "Брянск", "Владимир"};
 
 bool attempts[N];
 bool hide = true;
@@ -22,7 +22,7 @@ coord coordsList[] = { {7, 20}, {23, 19}, {58, 20}, {43, 23}, {11, 23},
     {20, 17}, {47, 22}, {23, 17}, {45, 22}, {10, 22},
     {18, 17}, {43, 23}, {7, 20}, {46, 14}, {77, 21},
     {10, 20}, {72, 17}, {68, 19}, {22, 12}, {13, 21},
-    {10, 16}, {11, 15} };
+    {10, 16}, {11, 15}, {16, 16} };
 int g;
 
 void E() {
@@ -174,7 +174,7 @@ void Draw(int region) {
     if (region == 14) IslandO(3, 11); else Island(3, 11);
     Island(0, 4);
     Dot(3); 
-    Space(7); Bullet(9);
+    Space(7); Bullet(9); Space(1); Bullet(33);
     E();
     
     //10
@@ -243,7 +243,9 @@ void Draw(int region) {
 
     //15
     if (region == 32) IslandO(9, 2); else Island(9, 2);
-    Island(0, 11);
+    Island(0, 4);
+    if (region == 33) IslandO(0, 1); else Island(0, 1);
+    Island(0, 6);
     if (region == 11) IslandO(0, 6); else Island(0, 6);
     Island(0, 12);
     if (region == 24) IslandO(0, 11); else Island(0, 11);
@@ -254,7 +256,9 @@ void Draw(int region) {
 
     //16
     if (region == 31) IslandO(9, 1); else Island(9, 1);
-    Island(0, 8);
+    Island(0, 5);
+    if (region == 33) IslandO(0, 1); else Island(0, 1);
+    Island(0, 2);
     if (region == 12) IslandO(0, 3); else  Island(0, 3);
     Island(0, 20);
     if (region == 24) IslandO(0, 10); else Island(0, 10);
@@ -413,7 +417,8 @@ void Draw(int region) {
         cout << "Ваш регион: " << toName(region); 
         if (region == g) {
             cout << "\nПОЗДРАВЛЯЕМ,\nвы угадали!\nВы будете служить ";
-            cout << "в ";
+            cout << "в";
+            if (region == 33) cout << "о "; else cout << " ";
             switch (region) {
             case 11:
             case 25:
@@ -452,6 +457,7 @@ void Draw(int region) {
             case 29:
             case 31:
             case 32:
+            case 33:
                 cout << statesList[region - 1] + "е";
                 break;
             }
