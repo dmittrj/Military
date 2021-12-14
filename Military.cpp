@@ -1,12 +1,12 @@
 ﻿#include <iostream>
 using namespace std;
 
-const int N = 34;
+const int N = 35;
 
 string statesList[] = { "Адыгея", "Башкортостан", "Бурятия", "Алтай", "Дагестан", "Ингушетия", "Кабардино-Балкария", "Калмыкия", "Карачаево-Черкесия", "Карелия", 
 "Коми", "Марий-Эл", "Мордовия", "Якутия", "Сев.Осетия", "Татарстан", "Тыва", "Удмуртия", "Хакассия", "Чечня",
 "Чувашия", "Алтай", "Краснодар", "Красноярск", "Приморье", "Ставрополь", "Хабаровск", "Приамурье", "Архангельск", "Астрахань",
-"Белгород", "Брянск", "Владимир", "Волгоград"};
+"Белгород", "Брянск", "Владимир", "Волгоград", "Вологда"};
 
 bool attempts[N];
 bool hide = true;
@@ -22,7 +22,7 @@ coord coordsList[] = { {7, 20}, {23, 19}, {58, 20}, {43, 23}, {11, 23},
     {20, 17}, {47, 22}, {23, 17}, {45, 22}, {10, 22},
     {18, 17}, {43, 23}, {7, 20}, {46, 14}, {77, 21},
     {10, 20}, {72, 17}, {68, 19}, {22, 12}, {13, 21},
-    {10, 16}, {11, 15}, {16, 16}, {14, 19} };
+    {10, 16}, {11, 15}, {16, 16}, {14, 19}, {18, 14} };
 int g;
 
 void E() {
@@ -201,7 +201,7 @@ void Draw(int region) {
     if (region == 14) IslandO(0, 17); else Island(0, 17);
     Island(0, 6);
     Island(3, 4); 
-    Space(3); Bullet(11);
+    Space(3); Bullet(11); Space(15); Bullet(35);
     E();
 
     //12
@@ -219,7 +219,8 @@ void Draw(int region) {
     E();
 
     //13
-    Island(11, 7); 
+    Island(11, 4); 
+    if (region == 35) IslandO(0, 3); else Island(0, 3);
     if (region == 29) IslandO(0, 5); else Island(0, 5);
     if (region == 11) IslandO(0, 11); else Island(0, 11);
     Island(0, 2);
@@ -231,7 +232,9 @@ void Draw(int region) {
     E();
 
     //14
-    Island(10, 12);
+    Island(10, 7);
+    if (region == 35) IslandO(0, 4); else Island(0, 4);
+    Island(0, 1);
     if (region == 29) IslandO(0, 2); else Island(0, 2);
     if (region == 11) IslandO(0, 6); else Island(0, 6);
     Island(0, 10);
@@ -433,6 +436,7 @@ void Draw(int region) {
             case 17:
             case 20:
             case 26:
+            case 35:
                 cout << statesList[region - 1].substr(0, statesList[region - 1].length() - 1) + "е";
                 break;
             case 3:
