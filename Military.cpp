@@ -7,7 +7,7 @@ string statesList[] = { "Адыгея", "Башкортостан", "Бурят�
 "Коми", "Марий-Эл", "Мордовия", "Якутия", "Сев.Осетия", "Татарстан", "Тыва", "Удмуртия", "Хакассия", "Чечня",
 "Чувашия", "Алтай", "Краснодар", "Красноярск", "Приморье", "Ставрополь", "Хабаровск", "Приамурье", "Архангельск", "Астрахань",
 "Белгород", "Брянск", "Владимир", "Волгоград", "Вологда", "Воронеж", "Иваново", "Иркутск", "Калининград", "Калуга",
-"Камчатка"};
+"Камчатка", "Кемерово", "Киров", "Кострома", "Курган", "Курск", "Ленинград", "Липецк", "Магадан", "Москва"};
 
 bool attempts[N];
 bool hide = true;
@@ -124,30 +124,36 @@ void Draw(int region) {
     system("cls");
 
     //1
-    Dot(76); Space(8); Bullet(1); Space(13); Bullet(25);
+    if (region == 80) DotO(76); else Dot(76);
+    Space(8); Bullet(1); Space(13); Bullet(25);
     E();
 
     //2
-    Dot(69); Island(4, 4); Space(7); Bullet(2); Space(7); Bullet(26);
+    if (region == 80) DotO(69); else Dot(69);
+    if (region == 80) IslandO(4, 4); else Island(4, 4);
+    Space(7); Bullet(2); Space(7); Bullet(26);
     E();
 
     //3
-    Island(70, 4); Space(11); Bullet(3); Space(12); Bullet(27);
+    if (region == 80) IslandO(70, 4); else Island(70, 4);
+    Space(11); Bullet(3); Space(12); Bullet(27);
     E();
 
     //4
-    Island(69, 4); Space(12); Bullet(4); Space(14); Bullet(28);
+    if (region == 80) IslandO(69, 4); else Island(69, 4);
+    Space(12); Bullet(4); Space(14); Bullet(28);
     E();
 
     //5
-    Island(68, 10); Space(7); Bullet(5); Space(11); Bullet(29);
+    if (region == 80) IslandO(68, 10); else Island(68, 10);
+    Space(7); Bullet(5); Space(11); Bullet(29);
     E();
 
     //6
     if (region == 24) DotO(44); else Dot(44);
     if (region == 14) DotO(14); else Dot(14);
     if (region == 14) DotO(5); else Dot(5);
-    Island(1, 10);
+    if (region == 80) IslandO(1, 10); else Island(1, 10);
     if (region == 41) IslandO(0, 1); else Island(0, 1);
     Space(7); Bullet(6); Space(10); Bullet(30);
     E();
@@ -158,39 +164,40 @@ void Draw(int region) {
     if (region == 14) IslandO(9, 2); else Island(9, 2);
     if (region == 14) DotO(1); else Dot(1);
     if (region == 14) IslandO(2, 7); else Island(2, 7);
-    Island(0, 4);
+    if (region == 80) IslandO(0, 4); else Island(0, 4);
     if (region == 41) IslandO(0, 5); else Island(0, 5);
     Space(7); Bullet(7); Space(1); Bullet(31);
     E();
 
     //8
-    Island(21, 2); 
-    Island(11, 4); 
+    if (region == 51) IslandO(21, 2); else Island(21, 2);
+    if (region == 29) IslandO(11, 4); else Island(11, 4);
     if (region == 24) IslandO(8, 4); else Island(8, 4);
     if (region == 14) IslandO(10, 11); else Island(10, 11);
-    Island(0, 4);
+    if (region == 49) IslandO(0, 4); else Island(0, 4);
     if (region == 41) DotO(1); else Dot(1);
     Space(8); Bullet(8); Space(11); Bullet(32);
     E();
 
     //9
-    Island(19, 4); Island(8, 2); 
+    if (region == 51) IslandO(19, 4); else Island(19, 4);
+    if (region == 29) IslandO(8, 2); else Island(8, 2);
     if (region == 24) IslandO(11, 6); else Island(11, 6);
     if (region == 14) IslandO(4, 2); else Island(4, 2);
     if (region == 14) IslandO(3, 11); else Island(3, 11);
-    Island(0, 4);
+    if (region == 49) IslandO(0, 4); else Island(0, 4);
     if (region == 41) DotO(3); else Dot(3);
     Space(7); Bullet(9); Space(1); Bullet(33);
     E();
     
     //10
     if (region == 10) IslandO(17, 3); else Island(17, 3);
-    Island(1, 3); 
-    Dot(6); 
+    if (region == 51) IslandO(1, 3); else Island(1, 3);
+    if (region == 29) IslandO(6, 1); else Island(6, 1);
     if (region == 24) IslandO(11, 7); else Island(11, 7);
     if (region == 24) DotO(1); Dot(1);
     if (region == 14) IslandO(0, 19); else Island(0, 19);
-    Island(0, 4);
+    if (region == 49) IslandO(0, 4); else Island(0, 4);
     if (region == 41) IslandO(3, 4); else Island(3, 4);
     Space(4); Bullet(10); Space(12); Bullet(34);
     E();
@@ -434,8 +441,8 @@ void Draw(int region) {
         cout << "Ваш регион: " << toName(region); 
         if (region == g) {
             cout << "\nПОЗДРАВЛЯЕМ,\nвы угадали!\nВы будете служить ";
-            cout << "в";
-            if (region == 33) cout << "о "; else cout << " ";
+            if (region == 33) cout << "во "; else
+                if (region == 41) cout << "на "; else cout << "в ";
             switch (region) {
             case 11:
             case 25:
@@ -451,6 +458,9 @@ void Draw(int region) {
             case 37:
             case 40:
             case 41:
+            case 42:
+            case 44:
+            case 50:
                 cout << statesList[region - 1].substr(0, statesList[region - 1].length() - 1) + "е";
                 break;
             case 3:
@@ -483,6 +493,12 @@ void Draw(int region) {
             case 36:
             case 38:
             case 39:
+            case 43:
+            case 45:
+            case 46:
+            case 47:
+            case 48:
+            case 49:
                 cout << statesList[region - 1] + "е";
                 break;
             }
