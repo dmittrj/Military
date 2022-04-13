@@ -1,0 +1,6 @@
+﻿  MilitaryAvoid.cpp
+C:\Users\Dmitry\source\repos\MilitaryAvoid\MilitaryAvoid.cpp(4,41): warning C4829: Возможно, неправильные параметры функции main. Рекомендуемый вариант - "int main(Platform::Array<Platform::String^>^ argv)"
+  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
+  Создание кода...
+  MilitaryAvoid.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
+  MilitaryAvoid.vcxproj -> C:\Users\Dmitry\source\repos\Military\Debug\MilitaryAvoid.exe
