@@ -1,4 +1,7 @@
 ﻿#include <iostream>
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 using namespace std;
 
 const int N = 41;
@@ -531,6 +534,9 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     system("chcp 1251");
+#ifdef _WIN32
+    SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+#endif
     srand(time(0));
     g = (rand() % N) + 1;
     if (g == 22) g = 4;
