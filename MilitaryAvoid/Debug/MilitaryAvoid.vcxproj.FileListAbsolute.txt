@@ -1,3 +1,6 @@
 C:\Users\Dmitry\source\repos\MilitaryAvoid\Debug\MilitaryAvoid.vcxproj.AssemblyReference.cache
 C:\Users\Dmitry\source\repos\MilitaryAvoid\Debug\MilitaryAvoid.MilitaryAvoid.resources
 C:\Users\Dmitry\source\repos\MilitaryAvoid\Debug\MilitaryAvoid.vcxproj.GenerateResource.cache
+C:\Users\Dmitry\source\repos\Military\MilitaryAvoid\Debug\MilitaryAvoid.vcxproj.AssemblyReference.cache
+C:\Users\Dmitry\source\repos\Military\MilitaryAvoid\Debug\MilitaryAvoid.MilitaryAvoid.resources
+C:\Users\Dmitry\source\repos\Military\MilitaryAvoid\Debug\MilitaryAvoid.vcxproj.GenerateResource.cache

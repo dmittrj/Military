@@ -15,6 +15,14 @@ string statesList[] = { "Адыгея", "Башкортостан", "Бурят�
 bool attempts[N];
 bool hide = true;
 
+enum class gamemode {
+    not_selected, zen, classic, hard, mayhem
+};
+
+gamemode gm = gamemode::not_selected;
+int lives = 0;
+int lives_border = 0;
+
 struct coord {
     int x;
     int y;
@@ -437,10 +445,48 @@ void Draw(int region) {
     Dot(51); 
     Space(33); Bullet(24);
     E();
+    switch (gm)
+    {
+    case gamemode::classic:
+    case gamemode::hard:
+        for (int i = 0; i < lives; i++)
+        {
+            cout << "/";
+        }
+        lives--;
+        if (lives < 0) {
+            cout << "Сожалеем, но ваши догадки закончились. Ждите приезда военкома к вам на дом" << endl;
+            cout << "Загаданный город: " << statesList[g - 1] << endl;
+            return;
+        }
+        break;
+    case gamemode::mayhem:
+        lives--;
+        if (lives == lives_border) {
+            cout << "Осталось мало догадок!" << endl;
+        }
+        if (lives < 0) {
+            cout << "Сожалеем, но ваши догадки закончились. Ждите приезда военкома к вам на дом" << endl;
+            cout << "Загаданный город: " << statesList[g - 1] << endl;
+            return;
+        }
+        break;
+    default:
+        break;
+    }
+    cout << endl;
     if (region == -1) {
         cout << "Неизвестный регион\n\n\n";
     } else
-    if (region != 0) { 
+        if (region == -2) {
+            cout << "Выберите уровень:\n/zen   /classic   /hard   /mayhem\n";
+        }
+        else
+            if (region == -3) {
+                cout << "Нельзя менять уровень во время игры!";
+            }
+            else
+            if (region != 0) { 
         cout << "Ваш регион: " << toName(region); 
         if (region == g) {
             cout << "\nПОЗДРАВЛЯЕМ,\nвы угадали!\nВы будете служить ";
@@ -514,19 +560,64 @@ void Draw(int region) {
         }
     }
     cout << endl;
-    cout << "\nГде вы будете служить? > ";
+    if (region != -2) cout << "\nГде вы будете служить? ";
+    cout << "> ";
     cin >> str;
     st = State(str);
     if (st == 22) st = 4;
     attempts[st - 1] = true;
     if (str == "/show") {
         hide = false;
+        lives++;
         Draw(0);
     } else if (str == "/hide") {
         hide = true;
+        lives++;
         Draw(0);
-    } else
-    Draw(st);
+    } else if (str == "/zen") {
+        if (gm == gamemode::not_selected) {
+            gamemode::zen;
+            Draw(0); 
+        }
+        else {
+            Draw(-3);
+        }
+    } else if (str == "/classic") {
+        if (gm == gamemode::not_selected) {
+            gm = gamemode::classic;
+            lives = 20;
+            Draw(0); 
+        }
+        else {
+            Draw(-3);
+        }
+    } else if (str == "/hard") {
+        if (gm == gamemode::not_selected) {
+            gm = gamemode::hard;
+            lives = 7;
+            Draw(0); 
+        }
+        else {
+            Draw(-3);
+        }
+    } else if (str == "/mayhem") {
+        if (gm == gamemode::not_selected) {
+            gm = gamemode::mayhem;
+            lives = rand() % 20 + 10;
+            lives_border = rand() % 6 + 1;
+            Draw(0); 
+        }
+        else {
+            Draw(-3);
+        }
+    }
+    else {
+        if (gm == gamemode::not_selected) {
+            gm = gamemode::classic;
+            lives = 20;
+        }
+        Draw(st);
+    }
     return;
 }
 
@@ -541,6 +632,6 @@ int main()
     g = (rand() % N) + 1;
     if (g == 22) g = 4;
     for (int i = 0; i < N; i++) attempts[i] = false;
-    Draw(0);
+    Draw(-2);
     system("pause");
 }
