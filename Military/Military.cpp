@@ -634,4 +634,5 @@ int main()
     for (int i = 0; i < N; i++) attempts[i] = false;
     Draw(-2);
     system("pause");
+
 }
