@@ -121,11 +121,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="draw.cpp" />
+    <ClCompile Include="pixels.cpp" />
     <ClCompile Include="MilitaryAvoid.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="draw.h" />
+    <ClInclude Include="pixels.h" />
     <ClInclude Include="MilitaryAvoid.h">
       <FileType>CppForm</FileType>
     </ClInclude>

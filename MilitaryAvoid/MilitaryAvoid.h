@@ -1,4 +1,5 @@
 #pragma once
+#include "pixels.h"
 
 namespace MilitaryAvoid {
 
@@ -8,6 +9,7 @@ namespace MilitaryAvoid {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Drawing::Drawing2D;
 
 	/// <summary>
 	/// Сводка для MyForm
@@ -63,6 +65,8 @@ namespace MilitaryAvoid {
 			this->PB_Playboard->Size = System::Drawing::Size(159, 105);
 			this->PB_Playboard->TabIndex = 0;
 			this->PB_Playboard->TabStop = false;
+			this->PB_Playboard->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MilitaryAvoidForm::PB_Playboard_Paint);
+			this->PB_Playboard->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MilitaryAvoidForm::PB_Playboard_MouseMove);
 			// 
 			// MilitaryAvoidForm
 			// 
@@ -92,7 +96,8 @@ namespace MilitaryAvoid {
 			int height = this->Height - y_border * 2 - 39;
 			float real_aspect = (float)height / (float)width;
 			Point* center = new Point((this->Width - 20) / 2, (this->Height - 39) / 2);
-			Point** workspace = new Point*;
+			//Point** workspace = new Point*;
+			
 			if (real_aspect > aspect) {
 				int new_height = width * aspect;
 				workspace[0] = new Point(x_border, center->Y - new_height / 2);
@@ -103,16 +108,121 @@ namespace MilitaryAvoid {
 				workspace[0] = new Point(center->X - new_width / 2, y_border);
 				workspace[1] = new Point(center->X + new_width / 2, y_border + height);
 			}
+			ratio_x = (float)(workspace[1]->X - workspace[0]->X) / 890;
+			ratio_y = (float)(workspace[1]->Y - workspace[0]->Y) / 510;
+
 
 			PB_Playboard->Width = this->Width;
 			PB_Playboard->Height = this->Height;
+			//Bitmap^ board = gcnew Bitmap(PB_Playboard->Width, PB_Playboard->Height);
+			//Graphics^ grfx = Graphics::FromImage(board);
+			////Drawing background
+			//grfx->Clear(Color::FromArgb(205, 205, 205));
+			//Rectangle* rect = new Rectangle(
+			//	workspace[0]->X, workspace[0]->Y,
+			//	-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
+			//PointF* p1 = new PointF(workspace[0]->X, workspace[0]->Y);
+			//PointF* p2 = new PointF(-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
+			//LinearGradientBrush^ russia_grad = gcnew LinearGradientBrush(*p1, *p2,
+			//	Color::Aqua, Color::BlueViolet);
+
+			//GraphicsPath^ path = gcnew GraphicsPath();
+			////path->AddEllipse(0, 0, 140, 70);
+			//path->AddRectangle(*rect);
+			//PathGradientBrush^ pthGrBrush = gcnew PathGradientBrush(path);
+			//pthGrBrush->CenterColor = Color::FromArgb(255, 20, 255, 30);
+			//pthGrBrush->CenterPoint = this->Cursor->Position;
+			//array<Color>^ colors = { 
+			//	Color::FromArgb(255, 0, 255, 255),
+			//	Color::FromArgb(255, 0, 200, 255) 
+			//};
+			//pthGrBrush->SurroundColors = colors;
+
+
+			////PathGradientBrush^ rg = gcnew PathGradientBrush();
+			//grfx->FillRectangle(pthGrBrush, workspace[0]->X, workspace[0]->Y,
+			//	-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
+			//array<Point>^ Russia = { 
+			//	Point (workspace[0]->X + 784 * ratio_x, workspace[0]->Y + 4 * ratio_y),
+			//	Point (workspace[0]->X + 789 * ratio_x, workspace[0]->Y + 8 * ratio_y),
+			//	Point (workspace[0]->X + 787 * ratio_x, workspace[0]->Y + 11 * ratio_y),
+			//	Point(workspace[0]->X + 791 * ratio_x, workspace[0]->Y + 13 * ratio_y),
+			//	Point(workspace[0]->X + 787 * ratio_x, workspace[0]->Y + 17 * ratio_y),
+			//	Point(workspace[0]->X + 794 * ratio_x, workspace[0]->Y + 17 * ratio_y),
+			//	Point(workspace[0]->X + 802 * ratio_x, workspace[0]->Y + 26 * ratio_y),
+			//	Point(workspace[0]->X + 796 * ratio_x, workspace[0]->Y + 29 * ratio_y),
+			//	Point(workspace[0]->X + 793 * ratio_x, workspace[0]->Y + 35 * ratio_y),
+			//	Point(workspace[0]->X + 786 * ratio_x, workspace[0]->Y + 34 * ratio_y),
+			//	Point(workspace[0]->X + 784 * ratio_x, workspace[0]->Y + 44 * ratio_y),
+			//	Point(workspace[0]->X + 777 * ratio_x, workspace[0]->Y + 45 * ratio_y),
+			//	Point(workspace[0]->X + 773 * ratio_x, workspace[0]->Y + 44 * ratio_y),
+			//	Point(workspace[0]->X + 775 * ratio_x, workspace[0]->Y + 53 * ratio_y),
+			//	Point(workspace[0]->X + 782 * ratio_x, workspace[0]->Y + 54 * ratio_y),
+			//	Point(workspace[0]->X + 786 * ratio_x, workspace[0]->Y + 58 * ratio_y),
+			//	Point(workspace[0]->X + 788 * ratio_x, workspace[0]->Y + 67 * ratio_y),
+			//	Point(workspace[0]->X + 781 * ratio_x, workspace[0]->Y + 71 * ratio_y)
+			//};
+			//grfx->FillPolygon(Brushes::Green, Russia);
+			//this->Text = ratio_x.ToString();
+			//PB_Playboard->Image = board;
+			paint();
+			delete center;
+			//delete workspace[1];
+			//delete workspace[2]; 
+			//delete[] workspace;
+		}
+
+		public: System::Void paint() {
 			Bitmap^ board = gcnew Bitmap(PB_Playboard->Width, PB_Playboard->Height);
 			Graphics^ grfx = Graphics::FromImage(board);
 			//Drawing background
 			grfx->Clear(Color::FromArgb(205, 205, 205));
-			grfx->FillRectangle(Brushes::Bisque, workspace[0]->X, workspace[0]->Y,
+			Rectangle* rect = new Rectangle(
+				workspace[0]->X, workspace[0]->Y,
 				-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
+			PointF* p1 = new PointF(workspace[0]->X, workspace[0]->Y);
+			PointF* p2 = new PointF(-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
+			LinearGradientBrush^ russia_grad = gcnew LinearGradientBrush(*p1, *p2,
+				Color::Aqua, Color::BlueViolet);
 
+			GraphicsPath^ path = gcnew GraphicsPath();
+			//path->AddEllipse(0, 0, 140, 70);
+			path->AddRectangle(*rect);
+			PathGradientBrush^ pthGrBrush = gcnew PathGradientBrush(path);
+			pthGrBrush->CenterColor = Color::FromArgb(255, 20, 255, 30);
+			pthGrBrush->CenterPoint = this->Cursor->Position;
+			array<Color>^ colors = {
+				Color::FromArgb(255, 0, 255, 255),
+				Color::FromArgb(255, 0, 200, 255)
+			};
+			pthGrBrush->SurroundColors = colors;
+
+
+			//PathGradientBrush^ rg = gcnew PathGradientBrush();
+			grfx->FillRectangle(pthGrBrush, workspace[0]->X, workspace[0]->Y,
+				-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
+			array<Point>^ Russia = {
+				Point(workspace[0]->X + 784 * ratio_x, workspace[0]->Y + 4 * ratio_y),
+				Point(workspace[0]->X + 789 * ratio_x, workspace[0]->Y + 8 * ratio_y),
+				Point(workspace[0]->X + 787 * ratio_x, workspace[0]->Y + 11 * ratio_y),
+				Point(workspace[0]->X + 791 * ratio_x, workspace[0]->Y + 13 * ratio_y),
+				Point(workspace[0]->X + 787 * ratio_x, workspace[0]->Y + 17 * ratio_y),
+				Point(workspace[0]->X + 794 * ratio_x, workspace[0]->Y + 17 * ratio_y),
+				Point(workspace[0]->X + 802 * ratio_x, workspace[0]->Y + 26 * ratio_y),
+				Point(workspace[0]->X + 796 * ratio_x, workspace[0]->Y + 29 * ratio_y),
+				Point(workspace[0]->X + 793 * ratio_x, workspace[0]->Y + 35 * ratio_y),
+				Point(workspace[0]->X + 786 * ratio_x, workspace[0]->Y + 34 * ratio_y),
+				Point(workspace[0]->X + 784 * ratio_x, workspace[0]->Y + 44 * ratio_y),
+				Point(workspace[0]->X + 777 * ratio_x, workspace[0]->Y + 45 * ratio_y),
+				Point(workspace[0]->X + 773 * ratio_x, workspace[0]->Y + 44 * ratio_y),
+				Point(workspace[0]->X + 775 * ratio_x, workspace[0]->Y + 53 * ratio_y),
+				Point(workspace[0]->X + 782 * ratio_x, workspace[0]->Y + 54 * ratio_y),
+				Point(workspace[0]->X + 786 * ratio_x, workspace[0]->Y + 58 * ratio_y),
+				Point(workspace[0]->X + 788 * ratio_x, workspace[0]->Y + 67 * ratio_y),
+				Point(workspace[0]->X + 781 * ratio_x, workspace[0]->Y + 71 * ratio_y)
+			};
+			grfx->FillPolygon(Brushes::Green, Russia);
+			this->Text = ratio_x.ToString();
 			PB_Playboard->Image = board;
 		}
 
@@ -121,6 +231,12 @@ namespace MilitaryAvoid {
 		}
 		private: System::Void MilitaryAvoidForm_SizeChanged(System::Object^ sender, System::EventArgs^ e) {
 			draw();
+		}
+		private: System::Void PB_Playboard_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			//paint();
+		}
+		private: System::Void PB_Playboard_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+			paint();
 		}
 	};
 }
