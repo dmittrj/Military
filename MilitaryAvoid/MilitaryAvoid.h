@@ -187,13 +187,15 @@ namespace MilitaryAvoid {
 
 			GraphicsPath^ path = gcnew GraphicsPath();
 			//path->AddEllipse(0, 0, 140, 70);
-			path->AddRectangle(*rect);
+			path->AddEllipse(-0.5*(this->Width), -0.5*(this->Height), 2 * (this->Width), 2 * (this->Height));
 			PathGradientBrush^ pthGrBrush = gcnew PathGradientBrush(path);
-			pthGrBrush->CenterColor = Color::FromArgb(255, 20, 255, 30);
-			pthGrBrush->CenterPoint = this->Cursor->Position;
+			//int cur_x = this->Cursor->Position.X - this->Location.X;
+			PointF* cur = new PointF(this->Cursor->Position.X - this->Location.X,
+				this->Cursor->Position.Y - this->Location.Y);
+			pthGrBrush->CenterColor = Color::FromArgb(255, 20, 200, 30);
+			pthGrBrush->CenterPoint = *cur;
 			array<Color>^ colors = {
-				Color::FromArgb(255, 0, 255, 255),
-				Color::FromArgb(255, 0, 200, 255)
+				Color::FromArgb(255, 0, 100, 255)
 			};
 			pthGrBrush->SurroundColors = colors;
 			SolidBrush^ bg = gcnew SolidBrush(Color::FromArgb(205, 205, 205));
