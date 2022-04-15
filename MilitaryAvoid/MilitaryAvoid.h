@@ -75,6 +75,7 @@ namespace MilitaryAvoid {
 			this->Text = L"MilitaryAvoid";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 			this->Load += gcnew System::EventHandler(this, &MilitaryAvoidForm::MilitaryAvoidForm_Load);
+			this->SizeChanged += gcnew System::EventHandler(this, &MilitaryAvoidForm::MilitaryAvoidForm_SizeChanged);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PB_Playboard))->EndInit();
 			this->ResumeLayout(false);
 
@@ -82,26 +83,44 @@ namespace MilitaryAvoid {
 #pragma endregion
 		
 		public: System::Void draw() {
+			const int x_border = 25;
+			const int y_border = 25;
+			//const int x_aspect = 890;
+			//const int y_aspect = 510;
+			const float aspect = 510.0f / 890.0f;
+			int width = this->Width - x_border * 2 - 20;
+			int height = this->Height - y_border * 2 - 39;
+			float real_aspect = (float)height / (float)width;
+			Point* center = new Point((this->Width - 20) / 2, (this->Height - 39) / 2);
+			Point** workspace = new Point*;
+			if (real_aspect > aspect) {
+				int new_height = width * aspect;
+				workspace[0] = new Point(x_border, center->Y - new_height / 2);
+				workspace[1] = new Point(x_border + width, center->Y + new_height / 2);
+			}
+			else {
+				int new_width = height / aspect;
+				workspace[0] = new Point(center->X - new_width / 2, y_border);
+				workspace[1] = new Point(center->X + new_width / 2, y_border + height);
+			}
+
 			PB_Playboard->Width = this->Width;
 			PB_Playboard->Height = this->Height;
 			Bitmap^ board = gcnew Bitmap(PB_Playboard->Width, PB_Playboard->Height);
 			Graphics^ grfx = Graphics::FromImage(board);
 			//Drawing background
 			grfx->Clear(Color::FromArgb(205, 205, 205));
+			grfx->FillRectangle(Brushes::Bisque, workspace[0]->X, workspace[0]->Y,
+				-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
 
 			PB_Playboard->Image = board;
 		}
 
 		private: System::Void MilitaryAvoidForm_Load(System::Object^ sender, System::EventArgs^ e) {
 			draw();
-			//PB_Playboard->Width = this->Width;
-			//PB_Playboard->Height = this->Height;
-			//Bitmap ^board = gcnew Bitmap(PB_Playboard->Width, PB_Playboard->Height);
-			//Graphics^ grfx = Graphics::FromImage(board);
-			////Drawing background
-			//grfx->Clear(Color::FromArgb(205, 205, 205));
-
-			//PB_Playboard->Image = board;
+		}
+		private: System::Void MilitaryAvoidForm_SizeChanged(System::Object^ sender, System::EventArgs^ e) {
+			draw();
 		}
 	};
 }
