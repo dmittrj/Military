@@ -26,8 +26,9 @@ namespace MilitaryAvoid {
 			cities[0] = new city("Майкоп", 45, 407);
 			cities[1] = new city("Горно-Алтайск", 408, 464);
 			cities[2] = new city("Уфа", 213, 381);
+			cities[3] = new city("Улан-Удэ", 567, 450);
 		}
-		array<city*>^ cities = gcnew array<city*>(3);
+		array<city*>^ cities = gcnew array<city*>(4);
 
 	protected:
 		/// <summary>
@@ -2473,7 +2474,7 @@ namespace MilitaryAvoid {
 			grfx->FillPolygon(bg, Russia10);
 			grfx->FillPolygon(bg, Russia11);
 			SolidBrush^ city_brush = gcnew SolidBrush(Color::FromArgb(105, 20, 100, 190));
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				if (cities[i]->can_visit) {
 					SolidBrush^ active_brush = gcnew SolidBrush(Color::FromArgb(215, 0, 50, 250));
