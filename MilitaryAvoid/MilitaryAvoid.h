@@ -12,7 +12,7 @@ namespace MilitaryAvoid {
 	using namespace System::Drawing::Drawing2D;
 
 	/// <summary>
-	/// Сводка для MyForm
+	/// РЎРІРѕРґРєР° РґР»СЏ MyForm
 	/// </summary>
 	public ref class MilitaryAvoidForm : public System::Windows::Forms::Form
 	{
@@ -21,17 +21,17 @@ namespace MilitaryAvoid {
 		{
 			InitializeComponent();
 			//
-			//TODO: добавьте код конструктора
+			//TODO: РґРѕР±Р°РІСЊС‚Рµ РєРѕРґ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
 			//
-			cities[0] = new city("Майкоп", 45, 407);
-			cities[1] = new city("Горно-Алтайск", 408, 464);
-			cities[2] = new city("Уфа", 213, 381);
+			cities[0] = new city("РњР°Р№РєРѕРї", 45, 407);
+			cities[1] = new city("Р“РѕСЂРЅРѕ-РђР»С‚Р°Р№СЃРє", 408, 464);
+			cities[2] = new city("РЈС„Р°", 213, 381);
 		}
 		array<city*>^ cities = gcnew array<city*>(3);
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ СЂРµСЃСѓСЂСЃС‹.
 		/// </summary>
 		~MilitaryAvoidForm()
 		{
@@ -47,14 +47,14 @@ namespace MilitaryAvoid {
 
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// РћР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°.
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// РўСЂРµР±СѓРµРјС‹Р№ РјРµС‚РѕРґ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° вЂ” РЅРµ РёР·РјРµРЅСЏР№С‚Рµ 
+		/// СЃРѕРґРµСЂР¶РёРјРѕРµ СЌС‚РѕРіРѕ РјРµС‚РѕРґР° СЃ РїРѕРјРѕС‰СЊСЋ СЂРµРґР°РєС‚РѕСЂР° РєРѕРґР°.
 		/// </summary>
 		void InitializeComponent(void)
 		{
