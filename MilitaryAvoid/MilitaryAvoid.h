@@ -25,7 +25,7 @@ namespace MilitaryAvoid {
 			//
 			cities[0] = new city("Майкоп", 45, 407);
 			cities[1] = new city("Горно-Алтайск", 408, 464);
-			cities[2] = new city("Горно-Алтайск", 213, 381);
+			cities[2] = new city("Уфа", 213, 381);
 		}
 		array<city*>^ cities = gcnew array<city*>(3);
 
