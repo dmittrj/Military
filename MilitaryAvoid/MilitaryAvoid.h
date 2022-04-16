@@ -23,7 +23,11 @@ namespace MilitaryAvoid {
 			//
 			//TODO: добавьте код конструктора
 			//
+			cities[0] = new city("Майкоп", 45, 407);
+			cities[1] = new city("Горно-Алтайск", 408, 464);
+			cities[2] = new city("Горно-Алтайск", 213, 381);
 		}
+		array<city*>^ cities = gcnew array<city*>(3);
 
 	protected:
 		/// <summary>
@@ -182,8 +186,8 @@ namespace MilitaryAvoid {
 				-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
 			PointF* p1 = new PointF(workspace[0]->X, workspace[0]->Y);
 			PointF* p2 = new PointF(-workspace[0]->X + workspace[1]->X, -workspace[0]->Y + workspace[1]->Y);
-			LinearGradientBrush^ russia_grad = gcnew LinearGradientBrush(*p1, *p2,
-				Color::Aqua, Color::BlueViolet);
+			//LinearGradientBrush^ russia_grad = gcnew LinearGradientBrush(*p1, *p2,
+			//	Color::Aqua, Color::BlueViolet);
 
 			GraphicsPath^ path = gcnew GraphicsPath();
 			//path->AddEllipse(0, 0, 140, 70);
@@ -2468,6 +2472,23 @@ namespace MilitaryAvoid {
 			grfx->FillPolygon(bg, Russia9);
 			grfx->FillPolygon(bg, Russia10);
 			grfx->FillPolygon(bg, Russia11);
+			SolidBrush^ city_brush = gcnew SolidBrush(Color::FromArgb(105, 20, 100, 190));
+			for (int i = 0; i < 3; i++)
+			{
+				if (cities[i]->can_visit) {
+					SolidBrush^ active_brush = gcnew SolidBrush(Color::FromArgb(215, 0, 50, 250));
+					grfx->FillEllipse(active_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - 7), 
+						(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - 7),
+						14, 14);
+				}
+				else {
+					SolidBrush^ nonactive_brush = gcnew SolidBrush(Color::FromArgb(215, 0, 50, 250));
+					grfx->FillEllipse(nonactive_brush, cities[i]->coord.X-5, cities[i]->coord.Y-5,
+						10, 10);
+				}
+			}
+			//grfx->FillEllipse(city_brush, cities[0]->coord.X, cities[0]->coord.Y,
+			//	15, 15);
 			//this->Text = ratio_x.ToString();
 			PB_Playboard->Image = board;
 		}
