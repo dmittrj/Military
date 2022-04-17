@@ -5,7 +5,7 @@
 #include <iostream>
 	using namespace System::Drawing;
 	using namespace System::Drawing::Drawing2D;
-#define NUMBEROFTOWNS 2;
+	static const int NUMBEROFTOWNS = 10;
 
 	static Point** workspace = new Point*;
 	static float ratio_x;
@@ -17,7 +17,13 @@
 		std::string name;
 		Point coord;
 		bool can_visit;
+		int neighbours[6];
+		bool you_are_here;
 
-		city(std::string t_name, int x, int y);
+		city(std::string t_name, std::string t_neighbours, int x, int y);
+		bool can_be_reached(int city_num);
+	private:
+		void parse(std::string str_to_parse, int* arr);
+		int parse_int(std::string str_to_parse);
 	};
 #endif // !PIXELS_H

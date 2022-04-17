@@ -23,12 +23,18 @@ namespace MilitaryAvoid {
 			//
 			//TODO: добавьте код конструктора
 			//
-			cities[0] = new city("Майкоп", 45, 407);
-			cities[1] = new city("Горно-Алтайск", 408, 464);
-			cities[2] = new city("Уфа", 213, 381);
-			cities[3] = new city("Улан-Удэ", 567, 450);
+			cities[0] = new city("Майкоп", "", 45, 407);
+			cities[1] = new city("Горно-Алтайск", "", 408, 464);
+			cities[2] = new city("Уфа", "", 213, 381);
+			cities[3] = new city("Улан-Удэ", "", 567, 450);
+			cities[4] = new city("Махачкала", "7,", 79, 467);
+			cities[5] = new city("Магас", "", 66, 448);
+			cities[6] = new city("Нальчик", "8,", 58, 437);
+			cities[7] = new city("Элиста", "4,", 85, 416);
+			cities[8] = new city("Черкесск", "6,", 51, 424);
+			cities[9] = new city("Петрозаводск", "", 152, 232);
 		}
-		array<city*>^ cities = gcnew array<city*>(4);
+		array<city*>^ cities = gcnew array<city*>(NUMBEROFTOWNS);
 
 	protected:
 		/// <summary>
@@ -2474,10 +2480,23 @@ namespace MilitaryAvoid {
 			grfx->FillPolygon(bg, Russia10);
 			grfx->FillPolygon(bg, Russia11);
 			SolidBrush^ city_brush = gcnew SolidBrush(Color::FromArgb(105, 20, 100, 190));
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < NUMBEROFTOWNS; i++) {
+				if (cities[i]->you_are_here) {
+					for (int j = 0; j < NUMBEROFTOWNS; j++) {
+						if (cities[j]->can_be_reached(i)) {
+							Pen^ pen = gcnew Pen(city_brush, 2);
+							grfx->DrawLine(pen, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x),
+								(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y),
+								(int)(workspace[0]->X + cities[j]->coord.X * ratio_x),
+								(int)(workspace[0]->Y + cities[j]->coord.Y * ratio_y));
+						}
+					}
+				}
+			}
+			for (int i = 0; i < NUMBEROFTOWNS; i++)
 			{
 				if (cities[i]->can_visit) {
-					SolidBrush^ active_brush = gcnew SolidBrush(Color::FromArgb(215, 0, 50, 250));
+					SolidBrush^ active_brush = gcnew SolidBrush(Color::FromArgb(175, 240, 250, 250));
 					grfx->FillEllipse(active_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - 7), 
 						(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - 7),
 						14, 14);
