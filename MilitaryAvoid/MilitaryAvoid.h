@@ -45,8 +45,19 @@ namespace MilitaryAvoid {
 			cities[19] = new city("Абакан", "1,17,", 442, 446);
 			cities[20] = new city("Грозный", "4,5,", 73, 450);
 			cities[21] = new city("Чебоксары", "13,16,12,", 165, 337);
+
+			srand(time(0));
+			int* randints = new int[NUMBEROFVOENKOMS];
+			for (int i = 0; i < NUMBEROFVOENKOMS; i++)
+			{
+				randints[i] = rand() % NUMBEROFTOWNS;
+			}
+			voenkoms[0] = new voenkomat(randints[0]);
+			voenkoms[1] = new voenkomat(randints[1]);
+			voenkoms[2] = new voenkomat(randints[2]);
 		}
-		array<city*>^ cities = gcnew array<city*>(NUMBEROFTOWNS);
+		static array<city*>^ cities = gcnew array<city*>(NUMBEROFTOWNS);
+		array<voenkomat*>^ voenkoms = gcnew array<voenkomat*>(NUMBEROFVOENKOMS);
 
 	protected:
 		/// <summary>
@@ -88,6 +99,7 @@ namespace MilitaryAvoid {
 			this->PB_Playboard->Size = System::Drawing::Size(159, 105);
 			this->PB_Playboard->TabIndex = 0;
 			this->PB_Playboard->TabStop = false;
+			this->PB_Playboard->Click += gcnew System::EventHandler(this, &MilitaryAvoidForm::PB_Playboard_Click);
 			this->PB_Playboard->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MilitaryAvoidForm::PB_Playboard_Paint);
 			this->PB_Playboard->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MilitaryAvoidForm::PB_Playboard_MouseMove);
 			// 
@@ -2491,12 +2503,24 @@ namespace MilitaryAvoid {
 			grfx->FillPolygon(bg, Russia9);
 			grfx->FillPolygon(bg, Russia10);
 			grfx->FillPolygon(bg, Russia11);
-			SolidBrush^ city_brush = gcnew SolidBrush(Color::FromArgb(105, 20, 100, 190));
+			SolidBrush^ city_brush_a = gcnew SolidBrush(Color::FromArgb(195, 210, 210, 210));
+			SolidBrush^ city_brush_p = gcnew SolidBrush(Color::FromArgb(195, 150, 150, 150));
 			for (int i = 0; i < NUMBEROFTOWNS; i++) {
 				if (cities[i]->you_are_here) {
 					for (int j = 0; j < NUMBEROFTOWNS; j++) {
 						if (cities[j]->can_be_reached(i)) {
-							Pen^ pen = gcnew Pen(city_brush, 2);
+							Pen^ pen = gcnew Pen(city_brush_a, 2);
+							grfx->DrawLine(pen, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x),
+								(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y),
+								(int)(workspace[0]->X + cities[j]->coord.X * ratio_x),
+								(int)(workspace[0]->Y + cities[j]->coord.Y * ratio_y));
+						}
+					}
+				}
+				else {
+					for (int j = 0; j < NUMBEROFTOWNS; j++) {
+						if (cities[j]->can_be_reached(i)) {
+							Pen^ pen = gcnew Pen(city_brush_p, 2);
 							grfx->DrawLine(pen, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x),
 								(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y),
 								(int)(workspace[0]->X + cities[j]->coord.X * ratio_x),
@@ -2507,18 +2531,41 @@ namespace MilitaryAvoid {
 			}
 			for (int i = 0; i < NUMBEROFTOWNS; i++)
 			{
+				SolidBrush^ circle_brush = gcnew SolidBrush(Color::FromArgb(175, 240, 250, 250));
+				int circle_radius;
+				if (cities[i]->can_visit) {
+					circle_radius = 8;
+					//circle_brush = gcnew SolidBrush(Color::FromArgb(175, 240, 250, 250));
+				}
+				else {
+					circle_radius = 4;
+					//circle_brush = gcnew SolidBrush(Color::FromArgb(215, 0, 50, 250));
+				}
+
+				for (int j = 0; j < NUMBEROFVOENKOMS; j++)
+				{
+					if (voenkoms[j]->city_number == i && voenkoms[j]->visible) {
+						circle_brush = gcnew SolidBrush(Color::FromArgb(175, 240, 20, 50));
+					}
+				}
+
+				if (cities[i]->you_are_here) {
+					circle_brush = gcnew SolidBrush(Color::FromArgb(180, 20, 20, 150));
+					circle_radius = 9;
+				}
+
 				if (cities[i]->can_visit) {
 					SolidBrush^ active_brush = gcnew SolidBrush(Color::FromArgb(175, 240, 250, 250));
 					if ((abs(cur->X - (workspace[0]->X + cities[i]->coord.X * ratio_x + 7)) < 5) &&
 						 (abs(cur->Y - (workspace[0]->Y + cities[i]->coord.Y * ratio_y + 30)) < 5)) {
-						grfx->FillEllipse(active_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - 10),
-							(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - 10),
-							20, 20);
+						grfx->FillEllipse(circle_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - circle_radius * 1.5),
+							(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - circle_radius * 1.5),
+							circle_radius * 3, circle_radius * 3);
 					}
 					else {
-						grfx->FillEllipse(active_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - 7),
-							(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - 7),
-							14, 14);
+						grfx->FillEllipse(circle_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - circle_radius),
+							(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - circle_radius),
+							circle_radius * 2, circle_radius * 2);
 					}
 
 					
@@ -2535,6 +2582,33 @@ namespace MilitaryAvoid {
 			PB_Playboard->Image = board;
 		}
 
+		public: System::Void travel() {
+			PointF* cur = new PointF(this->Cursor->Position.X - this->Location.X,
+				this->Cursor->Position.Y - this->Location.Y);
+			for (int i = 0; i < NUMBEROFTOWNS; i++) {
+				if ((abs(cur->X - (workspace[0]->X + cities[i]->coord.X * ratio_x + 7)) < 5) &&
+					(abs(cur->Y - (workspace[0]->Y + cities[i]->coord.Y * ratio_y + 30)) < 5)) {
+					cities[i]->you_are_here = true;
+				}
+				else {
+					cities[i]->you_are_here = false;
+				}
+			}
+			for (int i = 0; i < NUMBEROFVOENKOMS; i++)
+			{
+				if (i == visible_voenkomat) {
+					voenkoms[i]->visible = true;
+				}
+				else {
+					//voenkoms[i]->visible = false;
+				}
+				int direction = voenkoms[i]->go(voenkoms[i]->intellect, nullptr);
+				voenkoms[i]->city_number = direction;
+			}
+			(++visible_voenkomat) %= NUMBEROFVOENKOMS;
+
+		}
+
 		private: System::Void MilitaryAvoidForm_Load(System::Object^ sender, System::EventArgs^ e) {
 			draw();
 		}
@@ -2546,6 +2620,9 @@ namespace MilitaryAvoid {
 		}
 		private: System::Void PB_Playboard_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 			paint();
+		}
+		private: System::Void PB_Playboard_Click(System::Object^ sender, System::EventArgs^ e) {
+			travel();
 		}
 	};
 }

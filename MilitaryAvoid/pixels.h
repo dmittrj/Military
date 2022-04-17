@@ -6,10 +6,12 @@
 	using namespace System::Drawing;
 	using namespace System::Drawing::Drawing2D;
 	static const int NUMBEROFTOWNS = 22;
+	static const int NUMBEROFVOENKOMS = 3;
 
 	static Point** workspace = new Point*;
 	static float ratio_x;
 	static float ratio_y;
+	static int visible_voenkomat = 0;
 
 	//class city;
 	class city {
@@ -26,5 +28,14 @@
 	private:
 		void parse(std::string str_to_parse, int* arr);
 		int parse_int(std::string str_to_parse);
+	};
+
+	class voenkomat {
+	public:
+		int city_number;
+		int intellect;
+		bool visible;
+		voenkomat(int t_city_number);
+		int go(int depth, int* t_weights);
 	};
 #endif // !PIXELS_H
