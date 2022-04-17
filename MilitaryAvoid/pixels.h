@@ -5,7 +5,7 @@
 #include <iostream>
 	using namespace System::Drawing;
 	using namespace System::Drawing::Drawing2D;
-	static const int NUMBEROFTOWNS = 17;
+	static const int NUMBEROFTOWNS = 18;
 
 	static Point** workspace = new Point*;
 	static float ratio_x;

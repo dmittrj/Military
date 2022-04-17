@@ -24,9 +24,9 @@ namespace MilitaryAvoid {
 			//TODO: добавьте код конструктора
 			//
 			cities[0] = new city("Майкоп", "", 45, 407);
-			cities[1] = new city("Горно-Алтайск", "", 408, 464);
+			cities[1] = new city("Горно-Алтайск", "17,", 408, 464);
 			cities[2] = new city("Уфа", "16,", 213, 381);
-			cities[3] = new city("Улан-Удэ", "", 567, 450);
+			cities[3] = new city("Улан-Удэ", "17,", 567, 450);
 			cities[4] = new city("Махачкала", "7,", 79, 467);
 			cities[5] = new city("Магас", "15,", 66, 448);
 			cities[6] = new city("Нальчик", "8,15,", 58, 437);
@@ -40,6 +40,7 @@ namespace MilitaryAvoid {
 			cities[14] = new city("Якутск", "", 631, 280);
 			cities[15] = new city("Владикавказ", "6,5,", 60, 446);
 			cities[16] = new city("Казань", "12,2,", 178, 346);
+			cities[17] = new city("Кызыл", "1,3,", 474, 468);
 		}
 		array<city*>^ cities = gcnew array<city*>(NUMBEROFTOWNS);
 
