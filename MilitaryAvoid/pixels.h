@@ -18,6 +18,7 @@
 		Point coord;
 		bool can_visit;
 		int neighbours[6];
+		int radius;
 		bool you_are_here;
 
 		city(std::string t_name, std::string t_neighbours, int x, int y);

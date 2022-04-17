@@ -9,6 +9,7 @@ city::city(std::string t_name, std::string t_neighbours, int x, int y) {
 	coord = t_point;
 	can_visit = true;
 	you_are_here = true;
+	radius = 7;
 	parse(t_neighbours, neighbours);
 }
 

@@ -2509,9 +2509,19 @@ namespace MilitaryAvoid {
 			{
 				if (cities[i]->can_visit) {
 					SolidBrush^ active_brush = gcnew SolidBrush(Color::FromArgb(175, 240, 250, 250));
-					grfx->FillEllipse(active_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - 7), 
-						(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - 7),
-						14, 14);
+					if ((abs(cur->X - (workspace[0]->X + cities[i]->coord.X * ratio_x + 7)) < 5) &&
+						 (abs(cur->Y - (workspace[0]->Y + cities[i]->coord.Y * ratio_y + 30)) < 5)) {
+						grfx->FillEllipse(active_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - 10),
+							(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - 10),
+							20, 20);
+					}
+					else {
+						grfx->FillEllipse(active_brush, (int)(workspace[0]->X + cities[i]->coord.X * ratio_x - 7),
+							(int)(workspace[0]->Y + cities[i]->coord.Y * ratio_y - 7),
+							14, 14);
+					}
+
+					
 				}
 				else {
 					SolidBrush^ nonactive_brush = gcnew SolidBrush(Color::FromArgb(215, 0, 50, 250));
